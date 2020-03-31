@@ -1,0 +1,10 @@
+python-decouple
+tweepy
+sqlalchemy
+ipykernel
+pandas
+scikit-learn
+gensim
+spacy
+shapely
+geopandas
