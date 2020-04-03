@@ -1,9 +1,14 @@
+import json
+import os
+
 import dash
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
+
+from project.viz import Crosstab
 
 app = dash.Dash()
 
@@ -44,6 +49,13 @@ app.layout = html.Div(
 def update_graph(num_clicks, val_selected):
     if val_selected is None:
         raise PreventUpdate
+    else:
+        ct = Crosstab(frac=0.1)
+        counties = json.load(os.path.join('data', 'UScounties', 'UScounties.json'))
+        full_crosstab = ct.get_crosstab()
+        filtered_crosstab = ct.filter(val_selected)
+        fig = px.choropleth(filtered_crosstab, geojson=counties, color=filtered_crosstab.values)
+        fig.show()
 
 if __name__ == "__main__":
     app.run_server(debug=True)
