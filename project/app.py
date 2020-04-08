@@ -6,12 +6,13 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import dash_core_components as dcc
 import dash_html_components as html
+import eli5
 import plotly.express as px
 
 from project.load_model import load_model, tokenize
 from project.viz import Crosstab
 
-app = dash.Dash()
+app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
 
 app.title = 'County-Level Poltical Analysis of Coronavirus-Related Tweets'
 
@@ -66,25 +67,17 @@ def display_prediction(num_clicks, val_selected):
 )
 
 def update_weights(num_clicks, val_selected):
-    # if val_selected is None:
-    #     raise PreventUpdate
-    # else:
-    #     ct = Crosstab(frac=0.1)
-    #     counties = json.load(open(os.path.join('data', 'UScounties', 'UScounties.json')))
-    #     full_crosstab = ct.get_crosstab()
-    #     filtered_crosstab = ct.filter(val_selected)
-    #     fig = px.choropleth(top_counties, geojson=counties,
-    #                         locations='fips', color=val_selected.lower(), 
-    #                         color_continuous_scale=px.colors.sequential.YlGn,
-    #                         range_color=(0,5),
-    #                         scope='usa',
-    #                         hover_name='County Name/State Abbreviation',
-    #                         labels={'County Name/State Abbreviation':'County'})
-
-#         fig.show()
-
-#         return (f'The input value was "{val_selected}" and the button has been \
-#                 clicked {num_clicks} times', fig)
+    if val_selected is None:
+        raise PreventUpdate
+    else:
+        model = load_model()
+        weights = eli5.formatters.as_dataframe.explain_prediction_df(model['bayes'], val_selected, vec=model['counter'], target_names=['Blue', 'Red'])
+        weights['color'] = [weights['target'][i]
+                            if weights['weight'][i] > 0 
+                            else ['Blue', 'Red'][['Blue', 'Red'] != weights['target'][i]]
+                            for i in range(len(weights['target']))]
+        return (f'You asked the model to predict if "{val_selected}" was most likely tweeted in a Red or Blue County',
+                px.bar(weights, x='weight', y='feature', orientation='h', color='color'))
 
 if __name__ == "__main__":
     app.run_server(debug=True)
