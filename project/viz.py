@@ -6,14 +6,14 @@ import geopandas as gpd
 from geopandas import GeoDataFrame
 from sklearn.feature_extraction.text import CountVectorizer
 
-from project.load_model import model
+from project.load_model import load_model
 from project.model import Tweets, engine
 from project.stream.streamer import session
 from project.tokenize import tokenize
 
 #Load data from DB (for visualizations)
 states = pd.read_csv(os.path.join('data', 'states.csv'))
-df = pd.concat([pd.read_csv(os.path.join('data', '21000.csv')), pd.read_csv(os.path.join('data', '4500.csv'))])
+df = pd.concat([pd.read_csv(os.path.join('data', '21000.csv')), pd.read_csv(os.path.join('data', '10000.csv'))])
 final = df.merge(states[['State', 'Code']], left_on='STATE_NAME', right_on='State')
 fips = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/laucnty16.csv')
 
@@ -34,8 +34,8 @@ class Crosstab:
         self.crosstab = self.crosstab.merge(fips[['State FIPS Code','County FIPS Code','County Name/State Abbreviation']],
                                   how='left', left_on='county', right_on='County Name/State Abbreviation')
         self.crosstab['fips'] = self.crosstab['State FIPS Code'].astype('str').str.zfill(2) + self.crosstab['County FIPS Code'].astype('str').str.zfill(3)
+        self.crosstab.set_index('County Name/State Abbreviation')
     def get_crosstab(self):
         return self.crosstab
     def filter(self, query):
         return self.crosstab[query.lower()]
-#Series of Model Coefficients
