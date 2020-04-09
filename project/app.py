@@ -14,7 +14,7 @@ from project.load_model import load_model, tokenize
 
 app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
 
-server=app.server
+server = app.server
 
 app.title = 'County-Level Poltical Analysis of Coronavirus-Related Tweets'
 
