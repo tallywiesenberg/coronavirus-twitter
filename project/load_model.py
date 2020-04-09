@@ -5,7 +5,7 @@ import en_core_web_sm
 from sklearn.feature_extraction.text import TfidfVectorizer
 import spacy
 
-nlp = en_core_web_sm.load()
+nlp = spacy.load('en_core_web_sm')
 
 def tokenize(doc):
     return [token.text for token in nlp(doc) 
