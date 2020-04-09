@@ -21,7 +21,7 @@ app.title = 'County-Level Poltical Analysis of Coronavirus-Related Tweets'
 app.layout = html.Div([
 
     html.Div([
-        html.H1(children='Which COVID-19 Tweets Keywords Represent Red or Blue Counties'),
+        html.H1(children='Which COVID-19 Tweets Keywords Distinguish Red vs Blue Counties?'),
 
         html.Div(children='County-Level Poltical Analysis of Coronavirus-Related Tweets'),
 
