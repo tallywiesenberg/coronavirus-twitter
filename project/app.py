@@ -21,9 +21,7 @@ app.title = 'County-Level Poltical Analysis of Coronavirus-Related Tweets'
 app.layout = html.Div([
 
     html.Div([
-        html.H1(children='Which COVID-19 Tweets Keywords Distinguish Red vs Blue Counties?'),
-
-        html.Div(children='County-Level Poltical Analysis of Coronavirus-Related Tweets'),
+        html.H1(children='County-Level Poltical Analysis of Coronavirus-Related Tweets'),
 
         html.Div([
             dcc.Input(id='input_keyword', type='text', inputMode='latin', required=True),
@@ -59,7 +57,7 @@ def display_prediction(num_clicks, val_selected):
     else:
         model = load_model()
         prediction = model.predict([val_selected])
-        return list(prediction)
+        return [f'A {list(prediction)[0]} County']
 
 @app.callback(
     [Output('output_state', 'children'),
@@ -72,14 +70,21 @@ def update_weights(num_clicks, val_selected):
     if val_selected is None:
         raise PreventUpdate
     else:
+        target_names = ['Blue', 'Red']
         model = load_model()
-        weights = eli5.formatters.as_dataframe.explain_prediction_df(model['bayes'], val_selected, vec=model['counter'], target_names=['Blue', 'Red'])
+        weights = eli5.formatters.as_dataframe.explain_prediction_df(model['lr'], val_selected, vec=model['counter'], target_names=target_names)
         weights['color'] = [weights['target'][i]
                             if weights['weight'][i] > 0 
-                            else ['Blue', 'Red'][['Blue', 'Red'] != weights['target'][i]]
+                            else target_names[target_names != weights['target'][i]]
                             for i in range(len(weights['target']))]
+        fig = px.bar(weights, x='weight', y='feature', orientation='h',
+                     color='color', color_discrete_map={'Red': 'red', 'Blue': 'blue'})
+        fig.update_layout(
+            title="Which Keywords Sway a Tweet's Geographical Political Affiliation?",
+
+        )
         return (f'You asked the model to predict if "{val_selected}" was most likely tweeted in a Red or Blue County',
-                px.bar(weights, x='weight', y='feature', orientation='h', color='color'))
+                fig)
 
 if __name__ == "__main__":
     app.run_server(debug=True)
