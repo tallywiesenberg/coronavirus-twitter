@@ -11,17 +11,7 @@ class MyStreamListener(tweepy.StreamListener):
     def __init__(self, api):
         #Set API
         self.api = api
-        #Establish DB Connection
-        # self.db = create_engine('sqlite:///test.db')
-        # #Instantiate session
-        # self.Session = sessionmaker(bind=self.db)
-        # self.session = self.Session()
-        # #Create tables
-        # self.meta = MetaData(self.db)
-        # self.meta.create_all()
     def on_status(self, status):
-        # connect to DB
-#         curs = self.db.cursor()
         # Exclude retweets
         if 'RT @' not in status.text:
             # Choose only geotagged tweets in United States

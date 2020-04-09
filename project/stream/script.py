@@ -15,11 +15,7 @@ TWITTER = tweepy.API(TWITTER_AUTH)
 
 Base.metadata.create_all()
 
-for table in meta.tables:
-    print(table)
-
 myStreamListener = MyStreamListener(TWITTER)
-
 
 streamer = tweepy.Stream(auth=TWITTER_AUTH, listener=myStreamListener)
 

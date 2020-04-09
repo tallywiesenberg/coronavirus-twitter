@@ -6,11 +6,11 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_table
 import eli5
 import plotly.express as px
 
 from project.load_model import load_model, tokenize
-from project.viz import Crosstab
 
 app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
 
@@ -38,8 +38,22 @@ app.layout = html.Div([
 
     
     html.Div([
-        dcc.Graph(id='the_graph')
-    ])
+        
+        html.Div([
+            dcc.Graph(id='the_graph')
+        ], className='six columns'),
+
+        html.Div([
+            dcc.Markdown('''
+            ## Why This Project?
+            
+            This project intends to mitigate the spread of Coronavirus by providing to relief organizations a firmer understanding of how political geography affects an individual's reaction to crisis.
+            By uncovering the keywords that differentiate Twitter users from Red counties vs Blue counties (based on 2016 Presidential Election results), this model aims to assist public health workers address the needs of individuals based on their political geography.
+            ## Interpreting This Graph
+            
+            Submit a tweet, and a graph will appear that displays the keywords of the tweet that the model believes predicts the political affiliation of the user's county.''')
+        ], className='six columns')
+    ], className='row')
 
 ])
 
