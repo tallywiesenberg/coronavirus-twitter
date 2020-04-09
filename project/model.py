@@ -1,3 +1,5 @@
+'''DB Framework with SQLAlchemy'''
+
 from sqlalchemy import Column, Integer, BigInteger, String, ForeignKey, Float, create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, relationship, backref
 from sqlalchemy.ext.declarative import declarative_base

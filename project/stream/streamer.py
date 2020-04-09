@@ -1,3 +1,5 @@
+'''Custom Twitter streamer using Tweepy/Twitter API'''
+
 from project.model import Tweets, engine
 
 from sqlalchemy.orm import sessionmaker

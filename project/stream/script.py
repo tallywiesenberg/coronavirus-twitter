@@ -1,3 +1,5 @@
+'''Script for filling DB with Twitter Streamer tweets'''
+
 from decouple import config
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
