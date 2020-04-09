@@ -1,1 +1,1 @@
-web: gunicorn project:app -t 120
+web: gunicorn project.app:server -t 120
