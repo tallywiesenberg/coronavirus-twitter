@@ -51,7 +51,12 @@ app.layout = html.Div([
             By uncovering the keywords that differentiate Twitter users from Red counties vs Blue counties (based on 2016 Presidential Election results), this model aims to assist public health workers address the needs of individuals based on their political geography.
             ## Interpreting This Graph
             
-            Submit a tweet, and a graph will appear that displays the keywords of the tweet that the model believes predicts the political affiliation of the user's county.''')
+            Submit a tweet, and a graph will appear that displays the keywords of the tweet that the model believes predicts the political affiliation of the user's county.
+            
+            ## How Was This Data Sourced?
+
+            This model was trained on 30,000 tweets tweeted during the week of March 30, 2019. They were sourced using Twitter's official API and the Tweepy python library.
+            ''')
         ], className='six columns')
     ], className='row')
 
