@@ -2,7 +2,6 @@ import os
 import joblib
 
 import en_core_web_sm
-import imblearn
 from sklearn.feature_extraction.text import TfidfVectorizer
 import spacy
 
