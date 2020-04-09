@@ -14,12 +14,14 @@ from project.viz import Crosstab
 
 app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
 
+server=app.server
+
 app.title = 'County-Level Poltical Analysis of Coronavirus-Related Tweets'
 
 app.layout = html.Div([
 
     html.Div([
-        html.H1(children='COVID-19 on Twitter'),
+        html.H1(children='Which COVID-19 Tweets Keywords Represent Red or Blue Counties'),
 
         html.Div(children='County-Level Poltical Analysis of Coronavirus-Related Tweets'),
 
