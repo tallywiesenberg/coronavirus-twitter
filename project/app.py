@@ -14,10 +14,15 @@ import project.load_model
 from project.load_model import load_model, tokenize
 
 app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
-
 server = app.server
-
 app.title = 'County-Level Poltical Analysis of Coronavirus-Related Tweets'
+
+def tokenize(doc):
+    return [token.text for token in nlp(doc) 
+            if (token.pos_ not in set(['PUNCT', 'ADP', 'NUM', 'SPACE', 'PRON', 'DET', 'AUX', 'PART']))
+            and all(x not in token.text for x in ['#', '@', '_', 'corona', 'covid', '&', 'amp', '/', ' '])
+            and token.like_url == False
+            and token.is_stop == False]
 
 app.layout = html.Div([
 
