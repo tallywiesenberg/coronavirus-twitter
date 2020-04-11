@@ -12,7 +12,7 @@ import plotly.express as px
 import spacy
 
 import project.load_model
-from project.load_model import load_model, tokenize
+from project.load_model import load_model
 
 app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
 server = app.server
