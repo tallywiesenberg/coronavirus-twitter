@@ -9,6 +9,7 @@ import dash_html_components as html
 import dash_table
 import eli5
 import plotly.express as px
+from sklearn.feature_extraction.text import TfidfVectorizer
 import spacy
 
 import project.load_model
