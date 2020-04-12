@@ -12,8 +12,7 @@ import plotly.express as px
 from sklearn.feature_extraction.text import TfidfVectorizer
 import spacy
 
-import project.load_model
-from project.load_model import load_model
+from project.load_model import load_model, tokenize
 
 app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
 server = app.server
@@ -107,4 +106,4 @@ def update_weights(num_clicks, val_selected):
                 fig)
 
 if __name__ == "__main__":
-    app.run_server()
+    app.run_server(debug=True)
